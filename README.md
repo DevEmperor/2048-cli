@@ -24,4 +24,4 @@ Use your arrow keys to move the tiles. Tiles with the same number merge into one
 You can always abort by pressing the ESCAPE key.
 
 ## License
-2048-cli is under the terms of the [Apapche 2.0 license](https://www.apache.org/licenses/LICENSE-2.0), following all clarifications stated in the [license file](https://github.com/DevEmperor/2048-cli/blob/master/LICENSE)
+2048-cli is under the terms of the [Apapche 2.0 license](https://www.apache.org/licenses/LICENSE-2.0), following all clarifications stated in the [license file](https://raw.githubusercontent.com/DevEmperor/2048-cli/master/LICENSE)
