@@ -131,7 +131,7 @@ def on_key_release(key):
     if not any(tile == 0 for tile in [item for sub in board for item in sub]) \
             and not any(a == b for row in board for a, b in zip(row, row[1:])) \
             and not any(a == b for column in [[board[y][x] for y in range(4)] for x in range(4)] for a, b in zip(column, column[1:])):
-        print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), fg.red + "GAME OVER!")
+        print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), fg.red + ef.bold + "GAME OVER!")
         return False
     # ... and if the game continues, the new tile shows up
     time.sleep(0.2)
