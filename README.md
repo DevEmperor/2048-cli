@@ -19,5 +19,7 @@
 Use your arrow keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach the highest number!
 You can always undo your last move by pressing "u" or abort by pressing the "esc".
 
+**IMPORTANT: Since 2048-cli uses the Pynput-library, it currently also reads keys that are sent to other applications. Due to this bug, you should always stay in your terminal whil playing, in order to prevent sending keystrokes by accident!**
+
 ## License
 2048-cli is under the terms of the [Apapche 2.0 license](https://www.apache.org/licenses/LICENSE-2.0), following all clarifications stated in the [license file](https://raw.githubusercontent.com/DevEmperor/2048-cli/master/LICENSE)
