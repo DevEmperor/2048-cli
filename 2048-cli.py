@@ -39,7 +39,7 @@ def print_board(grid, scr, hs, pt, msg):
     term_size = shutil.get_terminal_size()
 
     print("\n\n")
-    print(" " * (term_size.columns // 2 - 5) + ef.underl + ef.bold + " 2048-cli " + ef.rs)
+    print(" " * (term_size.columns // 2 - 7) + ef.underl + ef.bold + " 2048-cli v1.1" + ef.rs)
     print(" " * (term_size.columns // 2 - 12) + "developed by Jannis Zahn\n")
     print(" " * (term_size.columns // 2 - ((11 + len(str(hs))) // 2)) + "Highscore: " + str(hs))
     print(" " * (term_size.columns // 2 - ((15 + len(str(hs))) // 2)) + "Current score: " + str(scr))
@@ -72,12 +72,23 @@ def spawn_new():
 
 def on_key_release(key):
     global board
+    global last_board
     global score
+    global last_score
     global highscore
+    undone = False
 
     if key == keyboard.Key.esc:  # abort if escape is pressed
         print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "Bye!")
         return False
+
+    try:
+        if key.char == "u":
+            board = [[ex for ex in ey] for ey in last_board]
+            score = last_score
+            undone = True
+    except AttributeError:
+        pass
 
     last_board = [[ex for ex in ey] for ey in board]  # copy the whole list, not only the reference
     if key in [keyboard.Key.up, keyboard.Key.down]:
@@ -91,6 +102,7 @@ def on_key_release(key):
             if key == keyboard.Key.down: t = t[::-1]
             for i in range(3):  # add same tiles together, if they're next to each other
                 if t[i] != 0 and t[i] == t[i + 1]:
+                    last_score = score
                     score += t[i] * 2
                     t = t[:i] + [t[i] * 2] + t[i + 2:] + [0]
             if key == keyboard.Key.down: t = t[::-1]
@@ -109,20 +121,20 @@ def on_key_release(key):
             if key == keyboard.Key.right: t = t[::-1]
             for i in range(3):  # add same tiles together, if they're next to each other
                 if t[i] != 0 and t[i] == t[i + 1]:
+                    last_score = score
                     score += t[i] * 2
                     t = t[:i] + [t[i] * 2] + t[i + 2:] + [0]
             if key == keyboard.Key.right: t = t[::-1]
 
             board[y] = t  # distribute all tiles
 
-    else:
+    elif not undone:
         return True
 
     # update highscore
     if score > highscore:
         write_highscore(score)
         highscore = score
-    print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "Press ESCAPE to exit ...")
 
     # pick new tile ...
     if last_board != board:
@@ -134,8 +146,7 @@ def on_key_release(key):
         print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), fg.red + ef.bold + "GAME OVER!")
         return False
     # ... and if the game continues, the new tile shows up
-    time.sleep(0.2)
-    print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "Press ESCAPE to exit ...")
+    print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "u --> undo | esc --> exit" if not undone else "UNDONE")
 
 
 # MAIN-FUNCTION
@@ -143,7 +154,9 @@ if __name__ == '__main__':
 
     # Initilization of board and variables
     board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+    last_board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
     score = 0
+    last_score = 0
     highscore = 0
     starting_time = time.time()
 
@@ -174,6 +187,6 @@ if __name__ == '__main__':
     spawn_new()
     spawn_new()
 
-    print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "Sum all tiles with the arrow keys ... Good luck! :)")
+    print_board(board, score, highscore, time.strftime("%H:%M:%S", time.gmtime(time.time() - starting_time)), "Join all tiles with the arrow keys ... Good luck! :)")
     with keyboard.Listener(on_release=on_key_release) as listener:  # start listening to keyboard inputs
         listener.join()
