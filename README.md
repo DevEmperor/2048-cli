@@ -5,10 +5,6 @@
 **2048-cli is the first version of the original 2048 game that is playable from the command line on any operating system**
 
 ## Installation
-### Using the bundled executables (usually the easiest way)
-Download the right executable for your operating system from the [Release page](https://github.com/DevEmperor/2048-cli/releases) and run it.
-
-### Running the source code
 1. Clone this git-repository
     ```bash
     git clone https://github.com/DevEmperor/2048-cli.git
@@ -21,7 +17,7 @@ Download the right executable for your operating system from the [Release page](
 
 ## How to play
 Use your arrow keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach the highest number!
-You can always abort by pressing the ESCAPE key.
+You can always undo your last move by pressing "u" or abort by pressing the "esc".
 
 ## License
 2048-cli is under the terms of the [Apapche 2.0 license](https://www.apache.org/licenses/LICENSE-2.0), following all clarifications stated in the [license file](https://raw.githubusercontent.com/DevEmperor/2048-cli/master/LICENSE)
